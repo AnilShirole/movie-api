@@ -17,7 +17,7 @@ describe('Movie Controller Tests:', function() {
                 send: sinon.spy()
             };
 
-            var movieController = require('../controllers/movieController')(Movie);
+            var movieController = require('../server/controllers/movieController')(Movie);
 
             movieController.post(req, res);
 
