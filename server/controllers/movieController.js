@@ -1,30 +1,34 @@
+var apiResponse = require('../common/apiResponse');
+
 var movieController = function(Movie) {
 
     var post = function(req, res) {
         var movie = new Movie(req.body);
-
+        var jsonResponse;
         if (!req.body.title) {
             res.status(400);
-            res.send('Title is required');
+            jsonResponse = apiResponse.createResposne('Title is required');
         } else {
             movie.save();
             res.status(201);
-            res.send(movie);
+            jsonResponse = apiResponse.createResposne(null, movie);
         }
+        res.json(jsonResponse);
     };
 
     var get = function(req, res) {
 
         var query = {};
-
+        var jsonResponse;
         if (req.query.genre) {
             query.genre = req.query.genre;
         }
         Movie.find(query, function(err, movies) {
 
-            if (err)
-                res.status(500).send(err);
-            else {
+            if (err) {
+                res.status(500);
+                jsonResponse = apiResponse.createResposne(err);
+            } else {
 
                 var returnMovies = [];
                 movies.forEach(function(element, index, array) {
@@ -33,8 +37,9 @@ var movieController = function(Movie) {
                     newMovie.links.self = 'http://' + req.headers.host + '/api/movies/' + newMovie._id
                     returnMovies.push(newMovie);
                 });
-                res.json(returnMovies);
+                jsonResponse = apiResponse.createResposne(null, returnMovies);
             }
+            res.json(jsonResponse);
         });
     };
 
