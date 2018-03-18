@@ -14,7 +14,7 @@
         "morgan": "1.9.0",
         "should": "5.2.0",
         "sinon": "1.14.0",
-        "swagger-express-middleware": "1.0.0-alpha.12"
+        "swagger-ui-express": "^2.0.15"
     },
     "devDependencies": {
         "gulp-env": "0.2.0",
